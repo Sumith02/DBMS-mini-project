@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Manage Book</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width,intial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../bootstrap-4.4.1/css/bootstrap.min.css">
+    <!-- <script type="text/javascript" src="../bootstrap-4.4.1/js/juqery_latest.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.4.1/js/bootstrap.min.js"></script> -->
+
+    <link rel="stylesheet" href="./style.css"> </head>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="../user/user_dashboard.html">Library Management System (LMS)</a>
+            </div>
+            <!-- <font style="color: white"><span><strong>Welcome: <?php echo $_SESSION['name'];?></strong></span></font>
+            <font style="color: white"><span><strong>Email: <?php echo $_SESSION['email'];?></strong></font> -->
+            <ul class="nav navbar-nav navbar-right">
+                <!-- <li class="nav-item dropdown">
+	        	<a class="nav-link dropdown-toggle" data-toggle="dropdown">My Profile </a>
+	        	<div class="dropdown-menu">
+	        		<a class="dropdown-item" href="">View Profile</a>
+	        		<div class="dropdown-divider"></div>
+	        		<a class="dropdown-item" href="#">Edit Profile</a>
+	        		<div class="dropdown-divider"></div>
+	        		<a class="dropdown-item" href="change_password.php">Change Password</a>
+	        	</div>
+		      </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="../front_page.html">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav><br>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd">
+        <div class="container-fluid">
+
+            <ul class="nav navbar-nav navbar-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="adminDashboard.html">Dashboard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Books </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="add_book.html">Add New Book</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="manage_book.html">Manage Books</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Category </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="add_cat.html">Add New Category</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="manage_cat.html">Manage Category</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Authors</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="add_author.html">Add New Author</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="manage_author.html">Manage Author</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="issue_book.html">Issue Book</a>
+                </li>
+            </ul>
+        </div>
+    </nav><br>
+    <br><br>
+    <center>
+        <h4>Manage Books</h4><br></center>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>SI.NO</th>
+                        <th>Book No</th>
+                        <th> Author id</th>
+                        <th>student id</th>
+                        <th>Issueed Date</th>
+                        <th>return Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="col-md-4">
+                        <th id="s_no"></th>
+                        <th id="book_name">Book No</th>
+                        <th> Author id</th>
+                        <th>student id</th>
+                        <th>Issueed Date</th>
+                        <th>return Date</th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <script>
+                const row = document.querySelector(".row");
+                const col1 = document.querySelector(".col-md-4");
+                const userId = localStorage.getItem("user_id");
+                fetch(`http://localhost:5000/library/viewissueuser?user_id=${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const nodes = col1.children;
+                        nodes[0].textContent = data.s_no
+                        nodes[1].textContent = data.book_name;
+                        nodes[2].textContent = data.author_id;
+                        nodes[3].textContent = data.user_id;
+                        nodes[4].textContent = data.issue_date.substring(0, 10);
+                        nodes[5].textContent = data.return_date.substring(0, 10);
+                    })
+            </script>
+</body>
+
+</html>
